@@ -1,5 +1,6 @@
 import React from 'react'
-import './App.css'
+import styles from './App.module.css'
+import {Header} from './components/header/Header'
 
 const checkCompatibility = () => {
   if (!('serviceWorker' in navigator)) {
@@ -17,20 +18,9 @@ function App() {
   if (compatibilityError) return compatibilityError
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.container}>
+      <Header />
+      <div className={styles.content}></div>
     </div>
   )
 }

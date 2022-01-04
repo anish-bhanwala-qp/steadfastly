@@ -1,6 +1,34 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Inter'),
+    url('../public/Inter-Regular.ttf') format('ttf'),
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: bold;
+  font-weight: 700;
+  src: local('Inter'),
+    url('../public/Inter-Bold.ttf') format('ttf'),
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-weight: 300;
+  src: local('Inter'),
+    url('../public/Inter-Light.ttf') format('ttf'),
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +38,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root {
+  --header-color: #BC8CF2;
+  --primary-color: #D47AE8;
+  --secondary-color: #548CFF;
 }
