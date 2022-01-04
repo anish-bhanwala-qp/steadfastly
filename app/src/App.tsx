@@ -1,7 +1,21 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import './App.css'
+
+const checkCompatibility = () => {
+  if (!('serviceWorker' in navigator)) {
+    return <h1>Your browser doesn't support ServiceWorkers.</h1>
+  }
+
+  if (!window.indexedDB) {
+    return <h1>Your browser doesn't support a stable version of IndexedDB.</h1>
+  }
+}
 
 function App() {
+  const compatibilityError = checkCompatibility()
+
+  if (compatibilityError) return compatibilityError
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,7 +32,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
