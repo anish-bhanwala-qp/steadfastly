@@ -2,9 +2,9 @@ import React from 'react'
 import {Nav} from '../nav/Nav'
 import styles from './Header.module.css'
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const [showNav, setShowNav] = React.useState<boolean>(false)
-  const handleToggleNav = () => {
+  const handleToggleNav = (): void => {
     setShowNav(!showNav)
   }
 

@@ -1,10 +1,10 @@
 {
-  "extends": ["react-app", "shared-config"],
+  "extends": ["react-app"],
   "overrides": [
     {
       "files": ["**/*.ts?(x)"],
       "rules": {
-        "explicit-function-return-type": "error"
+        "@typescript-eslint/explicit-function-return-type": "error"
       }
     }
   ]
