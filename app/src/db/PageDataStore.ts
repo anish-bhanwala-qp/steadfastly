@@ -30,6 +30,10 @@ export class PageDataStore {
     return db.getById(TableName.Pages, id)
   }
 
+  static getAll(db: Db): Promise<Page[]> {
+    return db.getAll<Page>(TableName.Pages)
+  }
+
   static updateById(db: Db, id: string, page: Page): Promise<void> {
     return db.updateById<Page>(TableName.Pages, id, page)
   }

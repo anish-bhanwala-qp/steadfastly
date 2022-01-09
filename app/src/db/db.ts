@@ -66,6 +66,26 @@ export class Db {
     })
   }
 
+  getAll<T>(tableName: string): Promise<T[]> {
+    const transaction = this.instance().transaction(tableName)
+    const objectStore = transaction.objectStore(tableName)
+    return new Promise<T[]>((resolve, reject) => {
+      const list: T[] = []
+
+      const request = objectStore.openCursor()
+
+      request.onsuccess = function (event): void {
+        const cursor = request.result
+        if (cursor) {
+          list.push(cursor.value)
+          cursor.continue()
+        } else {
+          resolve(list)
+        }
+      }
+    })
+  }
+
   getById<T>(tableName: string, id: string): Promise<T | undefined> {
     const transaction = this.instance().transaction(tableName)
     const objectStore = transaction.objectStore(tableName)
