@@ -5,7 +5,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-
+import {v4 as uuid} from 'uuid'
 import {ReactElement} from 'react'
 import {TestAppProviders} from './TestAppProviders'
 
@@ -13,9 +13,9 @@ async function render(
   ui: ReactElement,
   {
     route = '/',
-
+    databaseName = uuid(),
     ...renderOptions
-  }: {route?: string; rest?: any[]} = {},
+  }: {route?: string; databaseName?: string; rest?: any[]} = {},
 ): Promise<RenderResult> {
   window.history.pushState({}, 'Test page', `#${route}`)
   const returnValue = {

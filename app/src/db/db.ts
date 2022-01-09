@@ -80,6 +80,20 @@ export class Db {
     })
   }
 
+  updateById<T>(tableName: TableName, id: string, data: T): Promise<void> {
+    const transaction = this.instance().transaction(tableName, 'readwrite')
+    const objectStore = transaction.objectStore(tableName)
+    return new Promise<void>((resolve, reject) => {
+      const request = objectStore.put(data)
+      request.onerror = function (): void {
+        reject(request.error)
+      }
+      request.onsuccess = function (): void {
+        resolve()
+      }
+    })
+  }
+
   deleteDatabase(databaseName: string): Promise<void> {
     return new Promise((resolve, reject) => {
       if (!this.db) {

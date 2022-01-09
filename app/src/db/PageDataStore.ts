@@ -29,4 +29,8 @@ export class PageDataStore {
   static getById(db: Db, id: string): Promise<Page | undefined> {
     return db.getById(TableName.Pages, id)
   }
+
+  static updateById(db: Db, id: string, page: Page): Promise<void> {
+    return db.updateById<Page>(TableName.Pages, id, page)
+  }
 }

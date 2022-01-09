@@ -45,3 +45,13 @@ code {
   --primary-color: #D47AE8;
   --secondary-color: #548CFF;
 }
+
+[contenteditable]:empty:after,
+.forcePlaceholder:after {
+  content: attr(placeholder);
+  color: #9B9B9B;
+}
+
+[contenteditable] {
+  outline: none;
+}
