@@ -1,11 +1,12 @@
 import {TableName} from '../types/TablesName'
 import {PageDataStore} from './PageDataStore'
 
-const databaseName = process.env.REACT_APP_DB_NAME!
-const databaseVersion = +process.env.REACT_APP_DB_VERSION!
-
-class Db {
+export class Db {
   private db?: IDBDatabase
+
+  isConnected(): boolean {
+    return !!this.db
+  }
 
   instance(): IDBDatabase {
     if (!this.db) throw new Error('Database not yet initialized')
@@ -13,15 +14,14 @@ class Db {
   }
 
   private getObjectStore(
-    storeName: string,
+    storeName: TableName,
     mode: IDBTransactionMode,
   ): IDBObjectStore {
     const tx = this.instance().transaction(storeName, mode)
     return tx.objectStore(storeName)
   }
 
-  connect(): Promise<void> {
-    console.log(databaseName, databaseVersion)
+  connect(databaseName: string, databaseVersion: number): Promise<void> {
     const request = indexedDB.open(databaseName, databaseVersion)
     return new Promise<void>((resolve, reject) => {
       request.onerror = (event: any): void => {
@@ -30,13 +30,24 @@ class Db {
       }
       request.onsuccess = (): void => {
         this.db = request.result
+        this.db.onclose = (): void => console.log('database closed')
         resolve()
       }
 
-      request.onupgradeneeded = (): void => {
+      request.onupgradeneeded = (event): void => {
         this.db = request.result
-        PageDataStore.create()
-        resolve()
+        this.db.onclose = (): void => console.log('database closed')
+        /*  We need to wait for pageDataStore to complete. See below link 
+          https://stackoverflow.com/questions/33709976/uncaught-invalidstateerror-failed-to-execute-transaction-on-idbdatabase-a 
+        */
+        PageDataStore.create(this)
+
+        const tx = request.transaction!
+
+        tx.oncomplete = function (): void {
+          // Now store is available to be populated
+          resolve()
+        }
       }
     })
   }
@@ -68,6 +79,25 @@ class Db {
       }
     })
   }
-}
 
-export const db = new Db()
+  deleteDatabase(databaseName: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        resolve()
+        return
+      }
+
+      this.instance().close()
+      const deleteRequest = indexedDB.deleteDatabase(databaseName)
+
+      deleteRequest.onerror = function (): void {
+        console.log(deleteRequest.error)
+        reject(deleteRequest.error)
+      }
+
+      deleteRequest.onsuccess = function (): void {
+        resolve()
+      }
+    })
+  }
+}
