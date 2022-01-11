@@ -1,16 +1,17 @@
 import React from 'react'
 import {useDb} from 'src/providers/DbProvider'
-import {Page} from 'src/types/Page'
-import {PageDataStore} from '../db/PageDataStore'
+import {Block} from 'src/types/Block'
+import { BlockType } from 'src/types/BlockType'
+import {BlockDataStore} from '../db/BlockDataStore'
 import {WelcomeScreen} from './WelcomeScreen'
 
 export const HomeScreen: React.FC = () => {
   const db = useDb()
   const [loading, setLoading] = React.useState<boolean>(false)
-  const [pages, setPages] = React.useState<Page[]>([])
+  const [pages, setPages] = React.useState<Block[]>([])
 
   React.useEffect(() => {
-    PageDataStore.getAll(db)
+    BlockDataStore.getAllByType(db, BlockType.Page)
       .then(setPages)
       .then(() => setLoading(false))
   }, [db])
