@@ -27,7 +27,7 @@ const getPageIdFromUrl = (): string => {
 const goToHomePage = (): string => (window.location.href = '#/')
 
 describe('Page screen', () => {
-  test('Use can edit title and changes are reflected on the home screen', async () => {
+  test('User can edit title and changes are reflected on the home screen', async () => {
     await addPageAndNavigateToPage()
 
     const titleBlock = screen.getByPlaceholderText('Untitled')
@@ -42,5 +42,20 @@ describe('Page screen', () => {
     })
 
     expect(screen.getByText('Test Page')).toBeInTheDocument()
+  })
+
+  test('User can add text block to the page', async () => {
+    await addPageAndNavigateToPage()
+
+    expect(screen.getByPlaceholderText('Untitled')).toBeInTheDocument()
+
+    const addTextButton = screen.getByRole('button', {name: 'Add text'})
+    userEvent.click(addTextButton)
+
+    // Wait for text block to be added
+    await waitFor(() => screen.getByTestId('text-block'))
+    const textBlock = screen.getByTestId('text-block')
+    userEvent.type(textBlock, 'Test text block')
+    expect(textBlock).toHaveTextContent('Test text block')
   })
 })
