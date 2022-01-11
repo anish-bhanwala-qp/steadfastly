@@ -1,5 +1,4 @@
 import React from 'react'
-import {useNavigate} from 'react-router-dom'
 import {useDb} from 'src/providers/DbProvider'
 import {Block} from 'src/types/Block'
 import { BlockType } from 'src/types/BlockType'
@@ -18,12 +17,6 @@ export const HomeScreen: React.FC = () => {
       .then(() => setLoading(false))
   }, [db])
 
-  // const handleAddPage = async (): Promise<void> => {
-  //   setLoading(true)
-  //   await BlockDataStore.addBlank(db)
-  //   setLoading(false)
-  // }
-
   if (loading) return <div>Loading...</div>
 
   if (pages.length === 0) return <WelcomeScreen />
@@ -36,9 +29,6 @@ export const HomeScreen: React.FC = () => {
           <li key={page.id}>{page.title}</li>
         ))}
       </ul>
-      {/* <button disabled={loading} onClick={handleAddPage}>
-        {loading ? 'Loading...' : 'Add Page'}
-      </button> */}
     </div>
   )
 }
