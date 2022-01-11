@@ -23,3 +23,11 @@ jobs:
     - name: Run prettier
       run: |-
         npx prettier --config ./app/.prettierrc --check 'app/src/'
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm ci, build and test
+      run: |
+          npm ci    
+          npm run test:ci
