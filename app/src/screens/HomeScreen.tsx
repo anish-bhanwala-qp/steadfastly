@@ -6,7 +6,6 @@ import {BlockDataStore} from '../db/BlockDataStore'
 import {WelcomeScreen} from './WelcomeScreen'
 
 export const HomeScreen: React.FC = () => {
-  const navigate = useNavigate()
   const db = useDb()
   const [loading, setLoading] = React.useState<boolean>(false)
   const [pages, setPages] = React.useState<Block[]>([])
