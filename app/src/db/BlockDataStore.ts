@@ -11,7 +11,6 @@ export class BlockDataStore {
       .createObjectStore(TableName.Block, { keyPath: 'id' })
     // Allow searching by title
     //TODO: check if things work fine even if title is not present in properties
-    //TODO: do we really need title to be separate property or can it be part of 'properties'??
     objectStore.createIndex('title', 'properties.title', { unique: false })
     objectStore.createIndex('type', 'type', {unique: false})
   }
