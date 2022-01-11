@@ -1,5 +1,5 @@
-import {TableName} from '../types/TablesName'
-import {PageDataStore} from './PageDataStore'
+import { TableName } from '../types/TablesName'
+import { BlockDataStore } from './BlockDataStore'
 
 export class Db {
   private db?: IDBDatabase
@@ -40,7 +40,7 @@ export class Db {
         /*  We need to wait for pageDataStore to complete. See below link 
           https://stackoverflow.com/questions/33709976/uncaught-invalidstateerror-failed-to-execute-transaction-on-idbdatabase-a 
         */
-        PageDataStore.create(this)
+        BlockDataStore.create(this)
 
         const tx = request.transaction!
 
@@ -131,6 +131,26 @@ export class Db {
 
       deleteRequest.onsuccess = function (): void {
         resolve()
+      }
+    })
+  }
+
+  getAllByIndex<T>(tableName: string, index: string, value: string): Promise<T[]> {
+    const transaction = this.instance().transaction(tableName)
+    const objectStoreIndex = transaction.objectStore(tableName).index(index)
+    return new Promise<T[]>((resolve, reject) => {
+      const list: T[] = []
+      const keyValue = IDBKeyRange.only(value)
+      const request = objectStoreIndex.openCursor(keyValue)
+
+      request.onsuccess = function (event): void {
+        const cursor = request.result
+        if (cursor) {
+          list.push(cursor.value)
+          cursor.continue()
+        } else {
+          resolve(list)
+        }
       }
     })
   }

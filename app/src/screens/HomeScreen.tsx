@@ -1,19 +1,28 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 import {useDb} from 'src/providers/DbProvider'
-import {Page} from 'src/types/Page'
-import {PageDataStore} from '../db/PageDataStore'
+import {Block} from 'src/types/Block'
+import { BlockType } from 'src/types/BlockType'
+import {BlockDataStore} from '../db/BlockDataStore'
 import {WelcomeScreen} from './WelcomeScreen'
 
 export const HomeScreen: React.FC = () => {
+  const navigate = useNavigate()
   const db = useDb()
   const [loading, setLoading] = React.useState<boolean>(false)
-  const [pages, setPages] = React.useState<Page[]>([])
+  const [pages, setPages] = React.useState<Block[]>([])
 
   React.useEffect(() => {
-    PageDataStore.getAll(db)
+    BlockDataStore.getAllByType(db, BlockType.Page)
       .then(setPages)
       .then(() => setLoading(false))
   }, [db])
+
+  // const handleAddPage = async (): Promise<void> => {
+  //   setLoading(true)
+  //   await BlockDataStore.addBlank(db)
+  //   setLoading(false)
+  // }
 
   if (loading) return <div>Loading...</div>
 
@@ -27,6 +36,9 @@ export const HomeScreen: React.FC = () => {
           <li key={page.id}>{page.title}</li>
         ))}
       </ul>
+      {/* <button disabled={loading} onClick={handleAddPage}>
+        {loading ? 'Loading...' : 'Add Page'}
+      </button> */}
     </div>
   )
 }

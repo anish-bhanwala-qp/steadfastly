@@ -1,11 +1,11 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
-import {PageDataStore} from 'src/db/PageDataStore'
-import {Page} from 'src/types/Page'
+import {BlockDataStore} from 'src/db/BlockDataStore'
+import {Block} from 'src/types/Block'
 import {useDb} from './DbProvider'
 
 interface PageContextValue {
-  page?: Page
+  page?: Block
   onUpdateTitle(title: string): void
 }
 
@@ -17,7 +17,7 @@ export const PageProvider: React.FC = ({children}) => {
   const params = useParams()
   const db = useDb()
   const [loading, setLoading] = React.useState(true)
-  const [page, setPage] = React.useState<Page | undefined>()
+  const [page, setPage] = React.useState<Block | undefined>()
 
   React.useEffect(() => {
     if (!params.id) {
@@ -25,14 +25,15 @@ export const PageProvider: React.FC = ({children}) => {
       setPage(undefined)
       return
     }
-    PageDataStore.getById(db, params.id)
+    BlockDataStore.getById(db, params.id)
       .then(p => setPage(p))
       .then(() => setLoading(false))
   }, [db, params.id])
 
   const onUpdateTitle = React.useCallback(
     (title: string) => {
-      PageDataStore.updateById(db, page!.id, {...page!, title})
+      console.log("on updaste property is called")
+      BlockDataStore.updateById(db, page!.id, {...page!,  properties: {title: title},  updatedAt: new Date(), title})
     },
     [db, page],
   )

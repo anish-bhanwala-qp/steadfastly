@@ -1,7 +1,8 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useDb} from 'src/providers/DbProvider'
-import {PageDataStore} from '../db/PageDataStore'
+import { BlockType } from 'src/types/BlockType'
+import {BlockDataStore} from '../db/BlockDataStore'
 
 export const WelcomeScreen: React.FC = () => {
   const navigate = useNavigate()
@@ -10,7 +11,7 @@ export const WelcomeScreen: React.FC = () => {
 
   const handleAddPage = async (): Promise<void> => {
     setLoading(true)
-    const page = await PageDataStore.addBlank(db)
+    const page = await BlockDataStore.addBlank(db, BlockType.Page)
     setLoading(false)
     navigate(`/pages/${page.id}`)
   }

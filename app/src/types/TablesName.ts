@@ -1,3 +1,3 @@
 export enum TableName {
-  Pages = 'pages',
+  Block = 'block',
 }
