@@ -1,3 +1,3 @@
 export enum BlockType {
-    Page = 'page'
+  Page = 'page',
 }

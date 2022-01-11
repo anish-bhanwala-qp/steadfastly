@@ -1,11 +1,11 @@
 .header {
-    background-color: var(--header-color);
-    padding: 8px;
-    height: 48px;
-    box-sizing: border-box;
+  background-color: var(--header-color);
+  padding: 8px;
+  height: 48px;
+  box-sizing: border-box;
 }
 
 .name {
-    font-weight: bold;
-    margin-left: 16px;
+  font-weight: bold;
+  margin-left: 16px;
 }

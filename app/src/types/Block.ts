@@ -5,7 +5,7 @@ export interface Block {
   type: BlockType
   title?: string
   properties?: object
-  contents?:string[]
-  createdAt:Date
-  updatedAt:Date
+  contents?: string[]
+  createdAt: Date
+  updatedAt: Date
 }

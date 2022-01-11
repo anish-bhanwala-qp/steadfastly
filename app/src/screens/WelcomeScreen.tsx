@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useDb} from 'src/providers/DbProvider'
-import { BlockType } from 'src/types/BlockType'
+import {BlockType} from 'src/types/BlockType'
 import {BlockDataStore} from '../db/BlockDataStore'
 
 export const WelcomeScreen: React.FC = () => {

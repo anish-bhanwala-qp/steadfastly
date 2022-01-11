@@ -1,5 +1,5 @@
-import { TableName } from '../types/TablesName'
-import { BlockDataStore } from './BlockDataStore'
+import {TableName} from '../types/TablesName'
+import {BlockDataStore} from './BlockDataStore'
 
 export class Db {
   private db?: IDBDatabase
@@ -135,7 +135,11 @@ export class Db {
     })
   }
 
-  getAllByIndex<T>(tableName: string, index: string, value: string): Promise<T[]> {
+  getAllByIndex<T>(
+    tableName: string,
+    index: string,
+    value: string,
+  ): Promise<T[]> {
     const transaction = this.instance().transaction(tableName)
     const objectStoreIndex = transaction.objectStore(tableName).index(index)
     return new Promise<T[]>((resolve, reject) => {

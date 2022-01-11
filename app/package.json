@@ -31,6 +31,8 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
+    "format:check": "prettier --check src",
+    "format:fix": "prettier --fix src",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test"
@@ -55,6 +57,7 @@
   },
   "devDependencies": {
     "@types/uuid": "^8.3.4",
-    "fake-indexeddb": "^3.1.7"
+    "fake-indexeddb": "^3.1.7",
+    "prettier": "^2.5.1"
   }
 }

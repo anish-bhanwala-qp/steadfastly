@@ -22,4 +22,4 @@ jobs:
           ${{ runner.os }}-npm-
     - name: Run prettier
       run: |-
-        npx prettier --check 'app/src/'
+        npx prettier --config ./app/.prettierrc --check 'app/src/'

@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDb} from 'src/providers/DbProvider'
 import {Block} from 'src/types/Block'
-import { BlockType } from 'src/types/BlockType'
+import {BlockType} from 'src/types/BlockType'
 import {BlockDataStore} from '../db/BlockDataStore'
 import {WelcomeScreen} from './WelcomeScreen'
 

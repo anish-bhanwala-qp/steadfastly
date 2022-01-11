@@ -32,8 +32,13 @@ export const PageProvider: React.FC = ({children}) => {
 
   const onUpdateTitle = React.useCallback(
     (title: string) => {
-      console.log("on updaste property is called")
-      BlockDataStore.updateById(db, page!.id, {...page!,  properties: {title: title},  updatedAt: new Date(), title})
+      console.log('on updaste property is called')
+      BlockDataStore.updateById(db, page!.id, {
+        ...page!,
+        properties: {title: title},
+        updatedAt: new Date(),
+        title,
+      })
     },
     [db, page],
   )

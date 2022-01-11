@@ -2,23 +2,20 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  src: local('Inter'),
-    url('../public/Inter-Regular.ttf') format('ttf'),
+  src: local('Inter'), url('../public/Inter-Regular.ttf') format('ttf');
 }
 
 @font-face {
   font-family: 'Inter';
   font-style: bold;
   font-weight: 700;
-  src: local('Inter'),
-    url('../public/Inter-Bold.ttf') format('ttf'),
+  src: local('Inter'), url('../public/Inter-Bold.ttf') format('ttf');
 }
 
 @font-face {
   font-family: 'Inter';
   font-weight: 300;
-  src: local('Inter'),
-    url('../public/Inter-Light.ttf') format('ttf'),
+  src: local('Inter'), url('../public/Inter-Light.ttf') format('ttf');
 }
 
 html,
@@ -28,9 +25,8 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -41,15 +37,15 @@ code {
 }
 
 :root {
-  --header-color: #BC8CF2;
-  --primary-color: #D47AE8;
-  --secondary-color: #548CFF;
+  --header-color: #bc8cf2;
+  --primary-color: #d47ae8;
+  --secondary-color: #548cff;
 }
 
 [contenteditable]:empty:after,
 .forcePlaceholder:after {
   content: attr(placeholder);
-  color: #9B9B9B;
+  color: #9b9b9b;
 }
 
 [contenteditable] {

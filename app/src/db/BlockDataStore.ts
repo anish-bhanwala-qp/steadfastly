@@ -1,17 +1,17 @@
-import { Block } from '../types/Block'
-import { TableName } from '../types/TablesName'
-import { Db } from './db'
-import { v4 as uuid } from 'uuid'
-import { BlockType } from 'src/types/BlockType'
+import {Block} from '../types/Block'
+import {TableName} from '../types/TablesName'
+import {Db} from './db'
+import {v4 as uuid} from 'uuid'
+import {BlockType} from 'src/types/BlockType'
 
 export class BlockDataStore {
   static create(db: Db): void {
     const objectStore = db
       .instance()
-      .createObjectStore(TableName.Block, { keyPath: 'id' })
+      .createObjectStore(TableName.Block, {keyPath: 'id'})
     // Allow searching by title
     //TODO: check if things work fine even if title is not present in properties
-    objectStore.createIndex('title', 'properties.title', { unique: false })
+    objectStore.createIndex('title', 'properties.title', {unique: false})
     objectStore.createIndex('type', 'type', {unique: false})
   }
 
@@ -23,9 +23,9 @@ export class BlockDataStore {
     const block: Block = {
       id: uuid(),
       type: type,
-      properties: {'title':'Default Title'},
+      properties: {title: 'Default Title'},
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }
 
     await this.insert(db, block)
