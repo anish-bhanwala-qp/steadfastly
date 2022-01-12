@@ -3,8 +3,11 @@ import {HashRouter as Router} from 'react-router-dom'
 import {CompatibilityProvider} from './CheckCompatibility'
 import {DbProvider} from './DbProvider'
 
-const databaseName = process.env.REACT_APP_DB_NAME!
-const databaseVersion = +process.env.REACT_APP_DB_VERSION!
+// const databaseName = process.env.REACT_APP_DB_NAME!
+// const databaseVersion = +process.env.REACT_APP_DB_VERSION!
+
+const databaseName = "db"
+const databaseVersion = 2
 
 export const AppProviders: React.FC = ({children}) => {
   return (

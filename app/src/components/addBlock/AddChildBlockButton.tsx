@@ -1,15 +1,38 @@
 import React from 'react'
-import {usePage} from 'src/providers/PageProvider'
-import {BlockType} from 'src/types/BlockType'
+import { usePage } from 'src/providers/PageProvider'
+import { BlockType } from 'src/types/BlockType'
 
-export const AddChildBlockButton: React.FC = () => {
-  const {onAddBlock} = usePage()
+interface Props {
+  blockType: BlockType
+}
+
+export const AddChildBlockButton: React.FC<Props> = ({ blockType }) => {
+  const { onAddBlock } = usePage()
+
   const handleAddTextBlock = (): void => {
     onAddBlock(BlockType.Text)
   }
-  return (
-    <button type="button" onClick={handleAddTextBlock}>
-      Add text
-    </button>
-  )
+  const handleAddPageBlock = (): void => {
+    onAddBlock(BlockType.Page)
+  }
+
+  const renderButton = (): any => {
+    switch (blockType) {
+      case BlockType.Text:
+        return (
+          <button type="button" onClick={handleAddTextBlock}>
+            Add text
+          </button>
+        )
+      case BlockType.Page:
+        return (
+          <button type="button" onClick={handleAddPageBlock}>
+            Add page
+          </button>
+        )
+    }
+
+  }
+
+  return renderButton()
 }

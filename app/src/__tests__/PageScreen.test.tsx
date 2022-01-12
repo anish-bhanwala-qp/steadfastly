@@ -49,13 +49,28 @@ describe('Page screen', () => {
 
     expect(screen.getByPlaceholderText('Untitled')).toBeInTheDocument()
 
-    const addTextButton = screen.getByRole('button', {name: 'Add text'})
-    userEvent.click(addTextButton)
+    await addTextBlock()
+  })
 
-    // Wait for text block to be added
-    await waitFor(() => screen.getByTestId('text-block'))
-    const textBlock = screen.getByTestId('text-block')
-    userEvent.type(textBlock, 'Test text block')
-    expect(textBlock).toHaveTextContent('Test text block')
+  test('User can add multiple text blocks to the page', async () => {
+    await addPageAndNavigateToPage()
+    expect(screen.getByPlaceholderText('Untitled')).toBeInTheDocument()
+
+    await addTextBlock()
+    await addTextBlock('another text block')
+    
+    
   })
 })
+
+async function addTextBlock(textBlockContent: string = 'Test text block'): Promise<void> {
+  const addTextButton = screen.getByRole('button', { name: 'Add text' })
+  userEvent.click(addTextButton)
+
+  // Wait for text block to be added
+  await waitFor(() => screen.getByTestId('text-block'))
+  const textBlock = screen.getByTestId('text-block')
+  userEvent.type(textBlock, textBlockContent)
+  expect(textBlock).toHaveTextContent(textBlockContent)
+}
+
