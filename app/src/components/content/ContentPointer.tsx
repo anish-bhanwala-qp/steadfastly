@@ -1,23 +1,14 @@
 import React from 'react'
 
 interface Props {
-  onElementClick(): void
-  displayText: string | undefined
+  pageId: string
+  displayText?: string
 }
 
 export const ContentPointer: React.FC<Props> = ({
-  onElementClick,
+  pageId,
   displayText,
   ...props
 }) => {
-  //TODO: remove inline css
-  return (
-    <div
-      style={{cursor: 'pointer'}}
-      className="content-pointer"
-      onClick={onElementClick}
-    >
-      {displayText}
-    </div>
-  )
+  return <a href={`#/pages/${pageId}`}>{displayText || 'Untitled'}</a>
 }

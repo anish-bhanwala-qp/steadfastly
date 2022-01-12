@@ -16,7 +16,7 @@ export const createBlock = (blockType: BlockType): Block => {
 const createDefaultProperties = (blockType: BlockType): BlockProperties => {
   switch (blockType) {
     case BlockType.Page:
-      return {title: 'untitled-page'}
+      return {title: ''}
     case BlockType.Text:
       return {text: ''}
   }
