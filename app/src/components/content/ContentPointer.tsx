@@ -10,7 +10,7 @@ export const ContentPointer: React.FC<Props> = ({
     displayText,
     ...props
 }) => {
-
+    //TODO: remove inline css
     return (
     <div style={{cursor: 'pointer'}} className='content-pointer' onClick={onElementClick}>{displayText}</div>)
 
