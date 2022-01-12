@@ -16,7 +16,7 @@ export const AddChildBlockButton: React.FC<Props> = ({ blockType }) => {
     onAddBlock(BlockType.Page)
   }
 
-  const renderButton = (): any => {
+  const renderButton = (): JSX.Element => {
     switch (blockType) {
       case BlockType.Text:
         return (
