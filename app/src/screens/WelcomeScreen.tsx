@@ -1,6 +1,7 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useDb} from 'src/providers/DbProvider'
+import {createBlock} from 'src/types/BlockFactory'
 import {BlockType} from 'src/types/BlockType'
 import {BlockDataStore} from '../db/BlockDataStore'
 
@@ -11,7 +12,8 @@ export const WelcomeScreen: React.FC = () => {
 
   const handleAddPage = async (): Promise<void> => {
     setLoading(true)
-    const page = await BlockDataStore.addBlank(db, BlockType.Page)
+    const page = createBlock(BlockType.Page)
+    await BlockDataStore.insert(db, page)
     setLoading(false)
     navigate(`/pages/${page.id}`)
   }
