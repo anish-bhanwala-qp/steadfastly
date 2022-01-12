@@ -1,13 +1,13 @@
 import React from 'react'
-import { usePage } from 'src/providers/PageProvider'
-import { BlockType } from 'src/types/BlockType'
+import {usePage} from 'src/providers/PageProvider'
+import {BlockType} from 'src/types/BlockType'
 
 interface Props {
   blockType: BlockType
 }
 
-export const AddChildBlockButton: React.FC<Props> = ({ blockType }) => {
-  const { onAddBlock } = usePage()
+export const AddChildBlockButton: React.FC<Props> = ({blockType}) => {
+  const {onAddBlock} = usePage()
 
   const handleAddTextBlock = (): void => {
     onAddBlock(BlockType.Text)
@@ -31,7 +31,6 @@ export const AddChildBlockButton: React.FC<Props> = ({ blockType }) => {
           </button>
         )
     }
-
   }
 
   return renderButton()

@@ -32,7 +32,7 @@
   },
   "scripts": {
     "format:check": "prettier --check src",
-    "format:fix": "prettier --fix src",
+    "format:fix": "prettier --write src",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

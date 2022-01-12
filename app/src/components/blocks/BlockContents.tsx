@@ -7,7 +7,7 @@ import {TextBlock} from 'src/types/blocks/TextBlock'
 import {BlockType} from 'src/types/BlockType'
 import {TextBlockComponent} from './TextBlockComponent'
 import {PageBlockComponent} from './PageBlockComponent'
-import { PageBlock } from 'src/types/blocks/PageBlock'
+import {PageBlock} from 'src/types/blocks/PageBlock'
 
 export const BlockContents: React.FC = () => {
   const {page} = usePage()
