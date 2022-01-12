@@ -10,5 +10,9 @@ export const ContentPointer: React.FC<Props> = ({
   displayText,
   ...props
 }) => {
-  return <a href={`#/pages/${pageId}`}>{displayText || 'Untitled'}</a>
+  return (
+    <div>
+      <a href={`#/pages/${pageId}`}>{displayText || 'Untitled'}</a>
+    </div>
+  )
 }
