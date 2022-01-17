@@ -2,7 +2,7 @@ import React from 'react'
 import {BlockDataStore} from 'src/database/BlockDataStore'
 import {useDb} from 'src/providers/DbProvider'
 import {TextBlock} from 'src/types/blocks/TextBlock'
-import {Contenteditable} from '../contenteditable/Contenteditable'
+import {Contenteditable} from '../content/Contenteditable'
 
 interface Props {
   textBlock: TextBlock
