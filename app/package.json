@@ -61,5 +61,10 @@
     "@types/uuid": "^8.3.4",
     "fake-indexeddb": "^3.1.7",
     "prettier": "^2.5.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "/^src/(.*)$/": "<rootDir>/src/$1"
+    }
   }
 }
