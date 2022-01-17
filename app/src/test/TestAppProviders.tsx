@@ -1,5 +1,6 @@
 import React from 'react'
-import {HashRouter as Router} from 'react-router-dom'
+import {QueryClient, QueryClientProvider} from 'react-query'
+import {BrowserRouter as Router} from 'react-router-dom'
 import {DbProvider} from 'src/providers/DbProvider'
 
 interface Props {
@@ -7,9 +8,23 @@ interface Props {
 }
 
 export const TestAppProviders: React.FC<Props> = ({databaseName, children}) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  })
+
   return (
-    <DbProvider databaseName={databaseName} databaseVersion={1} testEnv={true}>
-      <Router>{children}</Router>
-    </DbProvider>
+    <QueryClientProvider client={queryClient}>
+      <DbProvider
+        databaseName={databaseName}
+        databaseVersion={1}
+        testEnv={true}
+      >
+        <Router>{children}</Router>
+      </DbProvider>
+    </QueryClientProvider>
   )
 }

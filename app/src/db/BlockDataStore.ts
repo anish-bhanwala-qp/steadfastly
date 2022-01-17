@@ -1,6 +1,6 @@
 import {Block} from '../types/Block'
 import {TableName} from '../types/TablesName'
-import {Db} from './db'
+import {Db} from './Db'
 import {BlockType} from 'src/types/BlockType'
 
 export class BlockDataStore {

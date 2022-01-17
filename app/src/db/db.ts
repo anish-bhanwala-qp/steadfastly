@@ -52,6 +52,10 @@ export class Db {
     })
   }
 
+  close(): void {
+    this.instance().close()
+  }
+
   insert<T>(tableName: TableName, obj: T): Promise<void> {
     const store = this.getObjectStore(tableName, 'readwrite')
     return new Promise<void>((resolve, reject) => {

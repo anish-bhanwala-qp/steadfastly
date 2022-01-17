@@ -1,22 +1,15 @@
 import React from 'react'
-import {useDb} from 'src/providers/DbProvider'
-import {PageBlock} from 'src/types/blocks/PageBlock'
-import {BlockType} from 'src/types/BlockType'
-import {BlockDataStore} from '../db/BlockDataStore'
+import {Link} from 'react-router-dom'
+import {usePages} from 'src/db/queryHooks'
 import {WelcomeScreen} from './WelcomeScreen'
 
 export const HomeScreen: React.FC = () => {
-  const db = useDb()
-  const [loading, setLoading] = React.useState<boolean>(false)
-  const [pages, setPages] = React.useState<PageBlock[]>([])
+  const {data, error, isLoading} = usePages()
 
-  React.useEffect(() => {
-    BlockDataStore.getAllByType<PageBlock>(db, BlockType.Page)
-      .then(setPages)
-      .then(() => setLoading(false))
-  }, [db])
+  if (error) throw error
+  if (isLoading) return <div>Loading...</div>
 
-  if (loading) return <div>Loading...</div>
+  const pages = data!
 
   if (pages.length === 0) return <WelcomeScreen />
 
@@ -25,7 +18,9 @@ export const HomeScreen: React.FC = () => {
       <h1>Your Pages</h1>
       <ul>
         {pages.map(page => (
-          <li key={page.id}>{page.properties.title}</li>
+          <li key={page.id}>
+            <Link to={`/pages/${page.id}`}>{page.properties.title}</Link>
+          </li>
         ))}
       </ul>
     </div>

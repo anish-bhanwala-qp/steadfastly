@@ -13,15 +13,21 @@ async function render(
   ui: ReactElement,
   {
     route = '/',
-    databaseName = uuid(),
+    databaseName,
     ...renderOptions
   }: {route?: string; databaseName?: string; rest?: any[]} = {},
 ): Promise<RenderResult> {
-  window.history.pushState({}, 'Test page', `#${route}`)
+  window.history.pushState({}, 'Test page', `${route}`)
+  const options = {databaseName, ...renderOptions}
+
   const returnValue = {
     ...renderInternal(ui, {
-      wrapper: TestAppProviders as any,
-      ...renderOptions,
+      wrapper: props => (
+        <TestAppProviders databaseName={databaseName || uuid()}>
+          {props.children}
+        </TestAppProviders>
+      ),
+      ...options,
     }),
   }
 

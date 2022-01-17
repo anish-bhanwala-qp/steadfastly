@@ -24,7 +24,10 @@ const getPageIdFromUrl = (): string => {
   return window.location.href.split('/').reverse()[0]
 }
 
-const goToHomePage = (): string => (window.location.href = '#/')
+const goToHomePage = (): void => {
+  const homeLink = screen.getByRole('link', {name: /steadfastly/i})
+  userEvent.click(homeLink)
+}
 
 describe('Page screen', () => {
   test('User can edit title and changes are reflected on the home screen', async () => {

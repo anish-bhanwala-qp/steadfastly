@@ -1,5 +1,5 @@
 import React from 'react'
-import {Db} from 'src/db/db'
+import {Db} from 'src/db/Db'
 
 interface Props {
   databaseName: string
