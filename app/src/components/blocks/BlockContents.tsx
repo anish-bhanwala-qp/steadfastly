@@ -1,5 +1,5 @@
 import React from 'react'
-import {BlockDataStore} from 'src/db/BlockDataStore'
+import {BlockDataStore} from 'src/database/BlockDataStore'
 import {useDb} from 'src/providers/DbProvider'
 import {usePage} from 'src/providers/PageProvider'
 import {Block} from 'src/types/Block'

@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import {useDb} from 'src/providers/DbProvider'
 import {createBlock} from 'src/types/BlockFactory'
 import {BlockType} from 'src/types/BlockType'
-import {BlockDataStore} from '../db/BlockDataStore'
+import {BlockDataStore} from '../database/BlockDataStore'
 
 export const WelcomeScreen: React.FC = () => {
   const navigate = useNavigate()

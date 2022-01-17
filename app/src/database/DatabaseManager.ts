@@ -1,7 +1,7 @@
 import {TableName} from '../types/TablesName'
 import {BlockDataStore} from './BlockDataStore'
 
-export class Db {
+export class DatabaseManager {
   private db?: IDBDatabase
 
   isConnected(): boolean {

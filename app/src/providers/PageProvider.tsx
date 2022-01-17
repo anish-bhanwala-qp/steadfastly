@@ -1,6 +1,6 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
-import {BlockDataStore} from 'src/db/BlockDataStore'
+import {BlockDataStore} from 'src/database/BlockDataStore'
 import {createBlock} from 'src/types/BlockFactory'
 import {PageBlock} from 'src/types/blocks/PageBlock'
 import {BlockType} from 'src/types/BlockType'

@@ -37,7 +37,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:ci": "ls && CI=true npm test"
+    "test:ci": "CI=true npm test"
   },
   "eslintConfig": {
     "extends": [
