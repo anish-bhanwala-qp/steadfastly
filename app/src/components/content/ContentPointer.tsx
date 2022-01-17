@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 interface Props {
   pageId: string
@@ -12,7 +13,7 @@ export const ContentPointer: React.FC<Props> = ({
 }) => {
   return (
     <div>
-      <a href={`#/pages/${pageId}`}>{displayText || 'Untitled'}</a>
+      <Link to={`/pages/${pageId}`}>{displayText || 'Untitled'}</Link>
     </div>
   )
 }

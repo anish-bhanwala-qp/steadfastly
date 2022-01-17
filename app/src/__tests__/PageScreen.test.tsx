@@ -61,4 +61,26 @@ describe('Page screen', () => {
     userEvent.type(textBlock, 'Test text block')
     expect(textBlock).toHaveTextContent('Test text block')
   })
+
+  test('User can add page block to the page and clicking it navigates to the page', async () => {
+    await addPageAndNavigateToPage()
+
+    // We are changing page title as child page will be 'Untitled'
+    const pageTitle = screen.getByPlaceholderText('Untitled')
+    userEvent.type(pageTitle, 'Test page')
+
+    const addPageButton = screen.getByRole('button', {name: 'Add page'})
+    userEvent.click(addPageButton)
+
+    // Wait for text block to be added
+    const newPageLink = await waitFor(() =>
+      screen.getByRole('link', {name: 'Untitled'}),
+    )
+
+    userEvent.click(newPageLink)
+
+    await waitForLoadingToFinish()
+
+    screen.getByPlaceholderText('Untitled')
+  })
 })

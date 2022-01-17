@@ -48,4 +48,26 @@ describe('Welcome screen', () => {
 
     db.close()
   })
+
+  test('Displays add page button even if there are multiple pages and adds a new page on clicking it', async () => {
+    const [databaseName, db] = await connectToTestDb()
+    const pages = await populateTestPages(db)
+
+    render(<App />, {databaseName})
+    await waitForLoadingToFinish()
+
+    for (const page of pages) {
+      screen.getByRole('link', {name: page.properties.title})
+    }
+
+    const addButton = screen.getByRole('button', {name: /add page/i})
+
+    userEvent.click(addButton)
+
+    await waitForLoadingToFinish()
+
+    screen.getByPlaceholderText('Untitled')
+
+    db.close()
+  })
 })

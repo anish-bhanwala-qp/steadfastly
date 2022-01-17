@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {AddPageButton} from 'src/components/addBlock/AddPageButton'
 import {usePagesQuery} from 'src/database/queryHooks'
 import {WelcomeScreen} from './WelcomeScreen'
 
@@ -19,10 +20,15 @@ export const HomeScreen: React.FC = () => {
       <ul>
         {pages.map(page => (
           <li key={page.id}>
-            <Link to={`/pages/${page.id}`}>{page.properties.title}</Link>
+            <Link to={`/pages/${page.id}`}>
+              {page.properties.title || 'Untitled'}
+            </Link>
           </li>
         ))}
       </ul>
+      <div>
+        <AddPageButton />
+      </div>
     </div>
   )
 }

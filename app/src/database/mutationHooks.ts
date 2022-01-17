@@ -4,7 +4,7 @@ import {createBlock} from 'src/types/BlockFactory'
 import {PageBlock} from 'src/types/blocks/PageBlock'
 import {BlockType} from 'src/types/BlockType'
 import {BlockDataStore} from './BlockDataStore'
-import {invalidatePageQuery} from './queryHooks'
+import {invalidatePageQuery, invalidatePagesQuery} from './queryHooks'
 
 interface AddBlockToPageReq {
   page: PageBlock
@@ -43,4 +43,20 @@ export const useAddBlockToPageMutation = (): UseMutationResult<
       },
     },
   )
+}
+
+export const useAddPageMutation = (): UseMutationResult<
+  PageBlock,
+  Error,
+  void
+> => {
+  const db = useDb()
+
+  return useMutation<PageBlock, Error, void>(async (): Promise<PageBlock> => {
+    const page = createBlock<PageBlock>(BlockType.Page)
+    await BlockDataStore.insert(db, page)
+    invalidatePagesQuery()
+
+    return page
+  })
 }

@@ -2,6 +2,7 @@ import {
   render as renderInternal,
   RenderResult,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -37,10 +38,19 @@ async function render(
   return returnValue
 }
 
-const waitForLoadingToFinish = (): Promise<void> =>
-  waitForElementToBeRemoved(() => [...screen.queryAllByText(/loading/i)], {
-    timeout: 4000,
-  })
+const waitForLoadingToFinish = async (): Promise<void> => {
+  await waitFor(() => screen.getByText(/loading/i))
+
+  // In case already done loading, return
+  if (!screen.queryByText(/loading/i)) return
+
+  await waitForElementToBeRemoved(
+    () => [...screen.queryAllByText(/loading/i)],
+    {
+      timeout: 4000,
+    },
+  )
+}
 
 const waitForSavingToFinish = (): Promise<void> =>
   waitForElementToBeRemoved(
