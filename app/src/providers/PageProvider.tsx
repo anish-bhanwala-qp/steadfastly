@@ -1,6 +1,7 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
 import {BlockDataStore} from 'src/database/BlockDataStore'
+import {usePageQuery} from 'src/database/queryHooks'
 import {createBlock} from 'src/types/BlockFactory'
 import {PageBlock} from 'src/types/blocks/PageBlock'
 import {BlockType} from 'src/types/BlockType'
@@ -9,30 +10,20 @@ import {useDb} from './DbProvider'
 interface PageContextValue {
   page?: PageBlock
   onUpdateTitle(title: string): void
-  onAddBlock(blockType: BlockType): void
 }
 
 const PageContext = React.createContext<PageContextValue>({
   onUpdateTitle: () => {},
-  onAddBlock: () => {},
 })
 
 export const PageProvider: React.FC = ({children}) => {
   const params = useParams()
   const db = useDb()
-  const [loading, setLoading] = React.useState(true)
-  const [page, setPage] = React.useState<PageBlock | undefined>()
+  const {error, data, isLoading} = usePageQuery(params.id!)
 
-  React.useEffect(() => {
-    if (!params.id) {
-      setLoading(false)
-      setPage(undefined)
-      return
-    }
-    BlockDataStore.getById<PageBlock>(db, params.id)
-      .then(p => setPage(p))
-      .then(() => setLoading(false))
-  }, [db, params.id])
+  if (error) throw error
+
+  const page = data
 
   const onUpdateTitle = React.useCallback(
     (title: string) => {
@@ -45,36 +36,18 @@ export const PageProvider: React.FC = ({children}) => {
     [db, page],
   )
 
-  const onAddBlock = React.useCallback(
-    async (blockType: BlockType) => {
-      const newBlock = createBlock(blockType)
-      const oldContents = page!.contents || []
-      const contents = [...oldContents, newBlock.id]
-      const updatedPage = {
-        ...page!,
-        contents,
-        updatedAt: new Date(),
-      }
-
-      await BlockDataStore.insert(db, newBlock)
-      setPage(updatedPage)
-      await BlockDataStore.updateById(db, page!.id, updatedPage)
-    },
-    [db, page],
-  )
-
   const value = React.useMemo(
-    () => ({page, onUpdateTitle, onAddBlock}),
-    [page, onUpdateTitle, onAddBlock],
+    () => ({page, onUpdateTitle}),
+    [page, onUpdateTitle],
   )
 
-  if (loading) return <div>Loading...</div>
+  if (isLoading) return <div>Loading...</div>
   if (!page) return <h1>Page not found</h1>
 
   return <PageContext.Provider value={value}>{children}</PageContext.Provider>
 }
 
-export const usePage = (): {
+export const usePageContext = (): {
   page: PageBlock
 } & Exclude<PageContextValue, 'page'> => {
   const context = React.useContext(PageContext)

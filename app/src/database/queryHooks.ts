@@ -5,7 +5,7 @@ import {PageBlock} from 'src/types/blocks/PageBlock'
 import {BlockType} from 'src/types/BlockType'
 import {BlockDataStore} from './BlockDataStore'
 
-export const usePages = (): UseQueryResult<PageBlock[]> => {
+export const usePagesQuery = (): UseQueryResult<PageBlock[]> => {
   const db = useDb()
 
   return useQuery(['pages'], () =>
@@ -13,6 +13,17 @@ export const usePages = (): UseQueryResult<PageBlock[]> => {
   )
 }
 
-export const invalidatePages = (): void => {
+export const invalidatePagesQuery = (): void => {
   queryClient.invalidateQueries(['pages'])
 }
+
+export const usePageQuery = (
+  id: string,
+): UseQueryResult<PageBlock | undefined> => {
+  const db = useDb()
+
+  return useQuery(['page', id], () => BlockDataStore.getById(db, id))
+}
+
+export const invalidatePageQuery = (id: string): Promise<void> =>
+  queryClient.invalidateQueries(['page', id])

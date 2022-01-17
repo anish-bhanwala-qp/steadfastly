@@ -1,9 +1,9 @@
 import React from 'react'
-import {usePage} from 'src/providers/PageProvider'
+import {usePageContext} from 'src/providers/PageProvider'
 import {Contenteditable} from '../contenteditable/Contenteditable'
 
 export const PageTitle: React.FC = () => {
-  const {page, onUpdateTitle} = usePage()
+  const {page, onUpdateTitle} = usePageContext()
 
   return (
     <Contenteditable

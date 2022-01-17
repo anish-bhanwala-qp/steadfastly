@@ -1,10 +1,10 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {usePages} from 'src/database/queryHooks'
+import {usePagesQuery} from 'src/database/queryHooks'
 import {WelcomeScreen} from './WelcomeScreen'
 
 export const HomeScreen: React.FC = () => {
-  const {data, error, isLoading} = usePages()
+  const {data, error, isLoading} = usePagesQuery()
 
   if (error) throw error
   if (isLoading) return <div>Loading...</div>
