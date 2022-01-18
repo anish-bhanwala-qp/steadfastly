@@ -1,5 +1,5 @@
 import React from 'react'
-import {Db} from 'src/db/db'
+import {DatabaseManager} from 'src/database/DatabaseManager'
 
 interface Props {
   databaseName: string
@@ -7,7 +7,7 @@ interface Props {
   testEnv?: boolean
 }
 
-const DbContext = React.createContext<Db | undefined>(undefined)
+const DbContext = React.createContext<DatabaseManager | undefined>(undefined)
 
 export const DbProvider: React.FC<Props> = ({
   children,
@@ -15,7 +15,7 @@ export const DbProvider: React.FC<Props> = ({
   databaseVersion,
   testEnv,
 }) => {
-  const dbRef = React.useRef<Db>(new Db())
+  const dbRef = React.useRef<DatabaseManager>(new DatabaseManager())
   const [loading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
@@ -38,7 +38,7 @@ export const DbProvider: React.FC<Props> = ({
   )
 }
 
-export const useDb = (): Db => {
+export const useDb = (): DatabaseManager => {
   const context = React.useContext(DbContext)
   if (context === undefined) {
     throw new Error(`useDb must be used within a DbProvider`)

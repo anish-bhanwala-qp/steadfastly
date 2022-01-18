@@ -24,7 +24,10 @@ const getPageIdFromUrl = (): string => {
   return window.location.href.split('/').reverse()[0]
 }
 
-const goToHomePage = (): string => (window.location.href = '#/')
+const goToHomePage = (): void => {
+  const homeLink = screen.getByRole('link', {name: /steadfastly/i})
+  userEvent.click(homeLink)
+}
 
 describe('Page screen', () => {
   test('User can edit title and changes are reflected on the home screen', async () => {
@@ -57,5 +60,27 @@ describe('Page screen', () => {
     const textBlock = screen.getByTestId('text-block')
     userEvent.type(textBlock, 'Test text block')
     expect(textBlock).toHaveTextContent('Test text block')
+  })
+
+  test('User can add page block to the page and clicking it navigates to the page', async () => {
+    await addPageAndNavigateToPage()
+
+    // We are changing page title as child page will be 'Untitled'
+    const pageTitle = screen.getByPlaceholderText('Untitled')
+    userEvent.type(pageTitle, 'Test page')
+
+    const addPageButton = screen.getByRole('button', {name: 'Add page'})
+    userEvent.click(addPageButton)
+
+    // Wait for text block to be added
+    const newPageLink = await waitFor(() =>
+      screen.getByRole('link', {name: 'Untitled'}),
+    )
+
+    userEvent.click(newPageLink)
+
+    await waitForLoadingToFinish()
+
+    screen.getByPlaceholderText('Untitled')
   })
 })

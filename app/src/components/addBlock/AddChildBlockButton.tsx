@@ -1,5 +1,6 @@
 import React from 'react'
-import {usePage} from 'src/providers/PageProvider'
+import {useAddBlockToPageMutation} from 'src/database/mutationHooks'
+import {usePageContext} from 'src/providers/PageProvider'
 import {BlockType} from 'src/types/BlockType'
 
 interface Props {
@@ -7,13 +8,15 @@ interface Props {
 }
 
 export const AddChildBlockButton: React.FC<Props> = ({blockType}) => {
-  const {onAddBlock} = usePage()
+  const {page} = usePageContext()
+  const addBlockToPageMutation = useAddBlockToPageMutation()
 
   const handleAddTextBlock = (): void => {
-    onAddBlock(BlockType.Text)
+    addBlockToPageMutation.mutate({page, blockType: BlockType.Text})
   }
+
   const handleAddPageBlock = (): void => {
-    onAddBlock(BlockType.Page)
+    addBlockToPageMutation.mutate({page, blockType: BlockType.Page})
   }
 
   const renderButton = (): JSX.Element => {

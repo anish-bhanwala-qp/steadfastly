@@ -1,7 +1,7 @@
 import {TableName} from '../types/TablesName'
 import {BlockDataStore} from './BlockDataStore'
 
-export class Db {
+export class DatabaseManager {
   private db?: IDBDatabase
 
   isConnected(): boolean {
@@ -50,6 +50,10 @@ export class Db {
         }
       }
     })
+  }
+
+  close(): void {
+    this.instance().close()
   }
 
   insert<T>(tableName: TableName, obj: T): Promise<void> {

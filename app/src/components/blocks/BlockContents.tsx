@@ -1,7 +1,7 @@
 import React from 'react'
-import {BlockDataStore} from 'src/db/BlockDataStore'
+import {BlockDataStore} from 'src/database/BlockDataStore'
 import {useDb} from 'src/providers/DbProvider'
-import {usePage} from 'src/providers/PageProvider'
+import {usePageContext} from 'src/providers/PageProvider'
 import {Block} from 'src/types/Block'
 import {TextBlock} from 'src/types/blocks/TextBlock'
 import {BlockType} from 'src/types/BlockType'
@@ -10,7 +10,7 @@ import {PageBlockComponent} from './PageBlockComponent'
 import {PageBlock} from 'src/types/blocks/PageBlock'
 
 export const BlockContents: React.FC = () => {
-  const {page} = usePage()
+  const {page} = usePageContext()
   const db = useDb()
   const [loading, setLoading] = React.useState<boolean>(false)
   const [blocks, setBlocks] = React.useState<(Block | undefined)[]>([])
