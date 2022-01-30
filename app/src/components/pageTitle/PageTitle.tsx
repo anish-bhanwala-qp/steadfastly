@@ -8,11 +8,10 @@ export const PageTitle: React.FC = () => {
   return (
     <Contenteditable
       element="h1"
+      content={page.properties.title}
       className="container"
       placeholder="Untitled"
       onChange={onUpdateTitle}
-    >
-      {page.properties.title}
-    </Contenteditable>
+    />
   )
 }
