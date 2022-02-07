@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {AddPageButton} from 'src/components/addBlock/AddPageButton'
+import {FullPageSpinner} from 'src/components/spinner/FullPageSpinner'
 import {usePagesQuery} from 'src/database/queryHooks'
 import {WelcomeScreen} from './WelcomeScreen'
 
@@ -8,7 +9,7 @@ export const HomeScreen: React.FC = () => {
   const {data, error, isLoading} = usePagesQuery()
 
   if (error) throw error
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <FullPageSpinner />
 
   const pages = data!
 

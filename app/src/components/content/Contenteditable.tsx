@@ -2,6 +2,7 @@ import React from 'react'
 
 interface Props {
   element: string
+  content?: string
   className?: string
   placeholder?: string
   onChange(text: string): void
@@ -9,8 +10,8 @@ interface Props {
 
 export const Contenteditable: React.FC<Props> = ({
   element,
+  content,
   onChange,
-  children,
   ...props
 }) => {
   const elementRef = React.useRef<HTMLDivElement | null>(null)
@@ -29,14 +30,11 @@ export const Contenteditable: React.FC<Props> = ({
     }
   }, [onChange])
 
-  return React.createElement(
-    element,
-    {
-      contentEditable: true,
-      ref: elementRef,
-      suppressContentEditableWarning: true,
-      ...props,
-    },
-    children,
-  )
+  return React.createElement(element, {
+    contentEditable: true,
+    ref: elementRef,
+    suppressContentEditableWarning: true,
+    ...props,
+    dangerouslySetInnerHTML: {__html: content},
+  })
 }

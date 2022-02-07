@@ -23,8 +23,7 @@ export const TextBlockComponent: React.FC<Props> = ({textBlock}) => {
       element="div"
       placeholder="Enter text"
       data-testid="text-block"
-    >
-      {textBlock.properties.text}
-    </Contenteditable>
+      content={textBlock.properties.text}
+    />
   )
 }

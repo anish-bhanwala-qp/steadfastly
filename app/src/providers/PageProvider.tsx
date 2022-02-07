@@ -1,10 +1,9 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
+import {FullPageSpinner} from 'src/components/spinner/FullPageSpinner'
 import {BlockDataStore} from 'src/database/BlockDataStore'
 import {usePageQuery} from 'src/database/queryHooks'
-import {createBlock} from 'src/types/BlockFactory'
 import {PageBlock} from 'src/types/blocks/PageBlock'
-import {BlockType} from 'src/types/BlockType'
 import {useDb} from './DbProvider'
 
 interface PageContextValue {
@@ -41,7 +40,7 @@ export const PageProvider: React.FC = ({children}) => {
     [page, onUpdateTitle],
   )
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <FullPageSpinner />
   if (!page) return <h1>Page not found</h1>
 
   return <PageContext.Provider value={value}>{children}</PageContext.Provider>
