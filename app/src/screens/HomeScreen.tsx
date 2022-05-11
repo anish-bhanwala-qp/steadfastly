@@ -1,34 +1,26 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {AddPageButton} from 'src/components/addBlock/AddPageButton'
-import {FullPageSpinner} from 'src/components/spinner/FullPageSpinner'
-import {usePagesQuery} from 'src/database/queryHooks'
+import {AddNoteButton} from 'src/components/addNoteButton/AddNoteButton'
+import {useAppStore} from 'src/store/appStore'
 import {WelcomeScreen} from './WelcomeScreen'
 
 export const HomeScreen: React.FC = () => {
-  const {data, error, isLoading} = usePagesQuery()
+  const notes = useAppStore(state => state.notes)
 
-  if (error) throw error
-  if (isLoading) return <FullPageSpinner />
-
-  const pages = data!
-
-  if (pages.length === 0) return <WelcomeScreen />
+  if (notes.length === 0) return <WelcomeScreen />
 
   return (
     <div>
-      <h1>Your Pages</h1>
+      <h1>Your Notes</h1>
       <ul>
-        {pages.map(page => (
-          <li key={page.id}>
-            <Link to={`/pages/${page.id}`}>
-              {page.properties.title || 'Untitled'}
-            </Link>
+        {notes.map(note => (
+          <li key={note.id}>
+            <Link to={`/notes/${note.id}`}>{note.title || 'Untitled'}</Link>
           </li>
         ))}
       </ul>
       <div>
-        <AddPageButton />
+        <AddNoteButton />
       </div>
     </div>
   )

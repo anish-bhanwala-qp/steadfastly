@@ -25,7 +25,7 @@ export class BlockDataStore {
     db: DatabaseManager,
     id: string,
   ): Promise<T | undefined> {
-    return db.getById(TableName.Block, id)
+    return db.findById(TableName.Block, id)
   }
 
   static getAllByType<T extends Block>(

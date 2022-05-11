@@ -1,12 +1,12 @@
 import {Routes, Route} from 'react-router-dom'
 import {HomeScreen} from './screens/HomeScreen'
-import {PageScreen} from './screens/PageScreen'
+import {NoteScreen} from './screens/note/NoteScreen'
 
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<HomeScreen />} />
-      <Route path="/pages/:id" element={<PageScreen />} />
+      <Route path="/notes/:id" element={<NoteScreen />} />
     </Routes>
   )
 }

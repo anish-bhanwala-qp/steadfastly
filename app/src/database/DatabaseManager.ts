@@ -1,5 +1,5 @@
 import {TableName} from '../types/TablesName'
-import {BlockDataStore} from './BlockDataStore'
+import {NoteDataStore} from './NoteDataStore'
 
 export class DatabaseManager {
   private db?: IDBDatabase
@@ -38,10 +38,10 @@ export class DatabaseManager {
       request.onupgradeneeded = (event): void => {
         this.db = request.result
         this.db.onclose = (): void => console.log('database closed')
-        /*  We need to wait for pageDataStore to complete. See below link 
+        /*  We need to wait for noteDataStore to complete. See below link 
           https://stackoverflow.com/questions/33709976/uncaught-invalidstateerror-failed-to-execute-transaction-on-idbdatabase-a 
         */
-        BlockDataStore.create(this)
+        NoteDataStore.create(this)
 
         const tx = request.transaction!
 
@@ -71,7 +71,41 @@ export class DatabaseManager {
     })
   }
 
-  getAll<T>(tableName: string): Promise<T[]> {
+  /* 
+    This method is useful when you don't want all the columns
+    to be populated in the result. E.g. if we want only id and 
+    title columns and skip content column we can call it like this:
+    findAllWithSelectedColumns('notes', ['id', 'title']), which will
+    return: [{id, title}, {id, title}].
+  */
+  findAllWithSelectedColumns<T>(
+    tableName: string,
+    columns: string[],
+  ): Promise<T[]> {
+    const transaction = this.instance().transaction(tableName)
+    const objectStore = transaction.objectStore(tableName)
+    return new Promise<T[]>((resolve, reject) => {
+      const list: T[] = []
+
+      const request = objectStore.openCursor()
+
+      request.onsuccess = function (event): void {
+        const cursor = request.result
+        if (cursor) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const item: any = {}
+          columns.forEach(column => (item[column] = cursor.value[column]))
+
+          list.push(item)
+          cursor.continue()
+        } else {
+          resolve(list)
+        }
+      }
+    })
+  }
+
+  findAll<T>(tableName: string): Promise<T[]> {
     const transaction = this.instance().transaction(tableName)
     const objectStore = transaction.objectStore(tableName)
     return new Promise<T[]>((resolve, reject) => {
@@ -91,7 +125,7 @@ export class DatabaseManager {
     })
   }
 
-  getById<T>(tableName: string, id: string): Promise<T | undefined> {
+  findById<T>(tableName: string, id: string): Promise<T | undefined> {
     const transaction = this.instance().transaction(tableName)
     const objectStore = transaction.objectStore(tableName)
     return new Promise<T>((resolve, reject) => {
@@ -112,9 +146,11 @@ export class DatabaseManager {
       const request = objectStore.put(data)
       request.onerror = function (): void {
         reject(request.error)
+        console.log('updateById failed', request.error)
       }
       request.onsuccess = function (): void {
         resolve()
+        console.log('updateById success')
       }
     })
   }

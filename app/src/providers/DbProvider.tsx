@@ -18,7 +18,7 @@ export const DbProvider: React.FC<Props> = ({
   const dbRef = React.useRef<DatabaseManager>(new DatabaseManager())
   const [loading, setLoading] = React.useState(true)
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | void => {
     dbRef.current
       .connect(databaseName, databaseVersion)
       .then(() => setLoading(false))

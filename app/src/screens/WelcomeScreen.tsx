@@ -1,11 +1,11 @@
 import React from 'react'
-import {AddPageButton} from 'src/components/addBlock/AddPageButton'
+import {AddNoteButton} from 'src/components/addNoteButton/AddNoteButton'
 
 export const WelcomeScreen: React.FC = () => {
   return (
     <div>
       <h1>Get started</h1>
-      <AddPageButton />
+      <AddNoteButton />
     </div>
   )
 }
