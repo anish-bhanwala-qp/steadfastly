@@ -58,5 +58,7 @@ export const usePageContext = (): {
     throw new Error(`Page not found`)
   }
 
-  return context as any
+  return context as {
+    page: PageBlock
+  } & Exclude<PageContextValue, 'page'>
 }

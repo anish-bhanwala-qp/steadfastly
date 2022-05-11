@@ -20,10 +20,6 @@ const addPageAndNavigateToPage = async (): Promise<{databaseName: string}> => {
   return {databaseName}
 }
 
-const getPageIdFromUrl = (): string => {
-  return window.location.href.split('/').reverse()[0]
-}
-
 const goToHomePage = (): void => {
   const homeLink = screen.getByRole('link', {name: /steadfastly/i})
   userEvent.click(homeLink)

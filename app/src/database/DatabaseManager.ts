@@ -24,6 +24,7 @@ export class DatabaseManager {
   connect(databaseName: string, databaseVersion: number): Promise<void> {
     const request = indexedDB.open(databaseName, databaseVersion)
     return new Promise<void>((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       request.onerror = (event: any): void => {
         console.log(event)
         reject(event?.target?.errorCode)

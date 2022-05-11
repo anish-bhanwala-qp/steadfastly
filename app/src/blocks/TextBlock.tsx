@@ -7,11 +7,11 @@ interface Props {
 export const TextBlock: React.FC<Props> = ({title}) => {
   const elementRef = React.useRef<HTMLDivElement | null>(null)
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | void => {
     if (elementRef.current) {
       const element = elementRef.current
 
-      const inputListener = (e: any): void => {
+      const inputListener = (): void => {
         console.log(element?.innerHTML)
       }
       element.addEventListener('input', inputListener)
@@ -19,6 +19,8 @@ export const TextBlock: React.FC<Props> = ({title}) => {
         element?.removeEventListener('input', inputListener)
       }
     }
+
+    return
   }, [])
 
   return (

@@ -10,7 +10,7 @@ export const createBlock = <T extends Block>(blockType: BlockType): T => {
     properties: createDefaultProperties(blockType),
     createdAt: new Date(),
     updatedAt: new Date(),
-  } as any
+  } as T
 }
 
 const createDefaultProperties = (blockType: BlockType): BlockProperties => {

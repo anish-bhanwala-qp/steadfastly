@@ -32,12 +32,13 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "format:check": "prettier --check src",
-    "format:fix": "prettier --write src",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:ci": "CI=true npm test"
+    "test:ci": "CI=true npm test",
+    "format:fix": "prettier --write src",
+    "format:ci": "prettier --check src",
+    "lint:ci": "eslint \"**/*.{ts,tsx}\" --max-warnings=0 --ignore-pattern node_modules/"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "@types/uuid": "^8.3.4",
+    "eslint": "^8.15.0",
     "fake-indexeddb": "^3.1.7",
     "prettier": "^2.5.1"
   }

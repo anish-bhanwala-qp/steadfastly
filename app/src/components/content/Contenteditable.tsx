@@ -16,11 +16,11 @@ export const Contenteditable: React.FC<Props> = ({
 }) => {
   const elementRef = React.useRef<HTMLDivElement | null>(null)
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | void => {
     if (elementRef.current) {
       const element = elementRef.current
 
-      const inputListener = (e: any): void => {
+      const inputListener = (): void => {
         onChange(element?.innerHTML)
       }
       element.addEventListener('input', inputListener)
@@ -35,6 +35,7 @@ export const Contenteditable: React.FC<Props> = ({
     ref: elementRef,
     suppressContentEditableWarning: true,
     ...props,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     dangerouslySetInnerHTML: {__html: content},
   })
 }

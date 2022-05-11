@@ -16,7 +16,7 @@ async function render(
     route = '/',
     databaseName,
     ...renderOptions
-  }: {route?: string; databaseName?: string; rest?: any[]} = {},
+  }: {route?: string; databaseName?: string; rest?: unknown[]} = {},
 ): Promise<RenderResult> {
   window.history.pushState({}, 'Test page', `${route}`)
   const options = {databaseName, ...renderOptions}

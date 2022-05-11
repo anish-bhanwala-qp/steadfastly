@@ -4,7 +4,20 @@
     {
       "files": ["**/*.ts?(x)"],
       "rules": {
-        "@typescript-eslint/explicit-function-return-type": "error"
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "default",
+            "format": [
+              "strictCamelCase",
+              "StrictPascalCase",
+              "UPPER_CASE",
+              "snake_case"
+            ]
+          }
+        ]
       }
     }
   ]
