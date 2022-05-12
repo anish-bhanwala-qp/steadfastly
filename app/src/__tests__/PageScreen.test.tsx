@@ -1,5 +1,5 @@
 import {
-  render,
+  customRender,
   userEvent,
   screen,
   waitFor,
@@ -10,7 +10,7 @@ import {v4 as uuid} from 'uuid'
 
 const addPageAndNavigateToPage = async (): Promise<{databaseName: string}> => {
   const databaseName = uuid()
-  render(<App />, {databaseName})
+  customRender(<App />, {databaseName})
   await waitForLoadingToFinish()
   const addButton = screen.getByRole('button', {name: /add page/i})
   userEvent.click(addButton)

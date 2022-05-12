@@ -1,11 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {AddNoteButton} from 'src/components/addNoteButton/AddNoteButton'
-import {useAppStore} from 'src/store/appStore'
+import {useAppStore} from 'src/providers/AppStoreProvider'
+import {useStore} from 'zustand'
 import {WelcomeScreen} from './WelcomeScreen'
 
 export const HomeScreen: React.FC = () => {
-  const notes = useAppStore(state => state.notes)
+  const notes = useStore(useAppStore(), state => state.notes)
 
   if (notes.length === 0) return <WelcomeScreen />
 

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@types/jest": "^26.0.24",
@@ -37,17 +37,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": " react-scripts test --detectOpenHandles --watchAll --transformIgnorePatterns \"node_modules/(?!react-markdown)/\" --env=jsdom",
     "test:ci": "CI=true npm test",
     "format:fix": "prettier --write src",
     "format:ci": "prettier --check src",
     "lint:ci": "eslint \"**/*.{ts,tsx}\" --max-warnings=0 --ignore-pattern node_modules/"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -65,6 +59,7 @@
     "@types/uuid": "^8.3.4",
     "eslint": "^8.15.0",
     "fake-indexeddb": "^3.1.7",
+    "jest": "^28.1.0",
     "prettier": "^2.5.1"
   }
 }

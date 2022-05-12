@@ -10,21 +10,25 @@ import {v4 as uuid} from 'uuid'
 import {ReactElement} from 'react'
 import {TestAppProviders} from './TestAppProviders'
 
-async function render(
+async function customRender(
   ui: ReactElement,
   {
     route = '/',
-    databaseName,
+    databaseName = uuid(),
     ...renderOptions
-  }: {route?: string; databaseName?: string; rest?: unknown[]} = {},
+  }: {
+    route?: string
+    databaseName?: string
+    rest?: unknown[]
+  } = {},
 ): Promise<RenderResult> {
   window.history.pushState({}, 'Test page', `${route}`)
-  const options = {databaseName, ...renderOptions}
+  const options = {...renderOptions}
 
   const returnValue = {
     ...renderInternal(ui, {
       wrapper: props => (
-        <TestAppProviders databaseName={databaseName || uuid()}>
+        <TestAppProviders databaseName={databaseName}>
           {props.children}
         </TestAppProviders>
       ),
@@ -63,7 +67,7 @@ const waitForSavingToFinish = (): Promise<void> =>
 
 export * from '@testing-library/react'
 export {
-  render,
+  customRender,
   screen,
   userEvent,
   waitForLoadingToFinish,

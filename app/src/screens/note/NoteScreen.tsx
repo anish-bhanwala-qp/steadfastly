@@ -1,7 +1,8 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
+import {useAppStore} from 'src/providers/AppStoreProvider'
 import {useDb} from 'src/providers/DbProvider'
-import {useAppStore} from 'src/store/appStore'
+import {useStore} from 'zustand'
 import {NoteEditor} from './components/NoteEditor'
 import {NoteTitle} from './components/NoteTitle'
 import {NoteWrapper} from './components/NoteWrapper'
@@ -9,8 +10,10 @@ import {NoteWrapper} from './components/NoteWrapper'
 export const NoteScreen: React.FC = () => {
   const db = useDb()
   const params = useParams()
-  const data = useAppStore(state => state.notes.find(n => n.id === params.id!))
-  const updateNote = useAppStore(state => state.updateNote)
+  const data = useStore(useAppStore(), state =>
+    state.notes.find(n => n.id === params.id!),
+  )
+  const updateNote = useStore(useAppStore(), state => state.updateNote)
 
   const note = data!
 

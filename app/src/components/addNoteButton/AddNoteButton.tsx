@@ -1,19 +1,28 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
-import {useAddNoteMutation} from 'src/api/notesApi'
+import {useAppStore} from 'src/providers/AppStoreProvider'
+import {useDb} from 'src/providers/DbProvider'
+import {useStore} from 'zustand'
 
 export const AddNoteButton: React.FC = () => {
   const navigate = useNavigate()
-  const addNoteMutation = useAddNoteMutation()
+  const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState<unknown | null>(null)
+  const addNote = useStore(useAppStore(), state => state.addNote)
+  const db = useDb()
 
-  if (addNoteMutation.error) throw addNoteMutation.error
+  if (error) throw error
 
   const handleAddNote = async (): Promise<void> => {
-    const note = await addNoteMutation.mutateAsync()
-    navigate(`/notes/${note.id}`)
-  }
+    try {
+      setLoading(true)
+      const note = await addNote(db)
 
-  const loading = addNoteMutation.isLoading
+      navigate(`/notes/${note.id}`)
+    } catch (error) {
+      setError(error)
+    }
+  }
 
   return (
     <button disabled={loading} onClick={handleAddNote}>

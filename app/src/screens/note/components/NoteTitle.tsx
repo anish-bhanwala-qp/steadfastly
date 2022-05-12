@@ -14,7 +14,12 @@ export const NoteTitle: React.FC<Props> = ({title, onChange}) => {
 
   return (
     <div>
-      <input type="text" value={value} onChange={handleOnChange} />
+      <input
+        type="text"
+        value={value}
+        onChange={handleOnChange}
+        placeholder="Enter title"
+      />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import {DatabaseManager} from 'src/database/DatabaseManager'
 
 interface Props {
   databaseName: string
+  databaseManager?: DatabaseManager
   databaseVersion: number
   testEnv?: boolean
 }
@@ -12,10 +13,13 @@ const DbContext = React.createContext<DatabaseManager | undefined>(undefined)
 export const DbProvider: React.FC<Props> = ({
   children,
   databaseName,
+  databaseManager,
   databaseVersion,
   testEnv,
 }) => {
-  const dbRef = React.useRef<DatabaseManager>(new DatabaseManager())
+  const dbRef = React.useRef<DatabaseManager>(
+    databaseManager || new DatabaseManager(),
+  )
   const [loading, setLoading] = React.useState(true)
 
   React.useEffect((): (() => void) | void => {

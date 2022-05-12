@@ -1,6 +1,7 @@
 import React from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {BrowserRouter as Router} from 'react-router-dom'
+import {AppStoreProvider} from './AppStoreProvider'
 import {CompatibilityProvider} from './CheckCompatibility'
 import {DbProvider} from './DbProvider'
 
@@ -23,7 +24,9 @@ export const AppProviders: React.FC = ({children}) => {
           databaseName={databaseName}
           databaseVersion={databaseVersion}
         >
-          <Router>{children}</Router>
+          <AppStoreProvider>
+            <Router>{children}</Router>
+          </AppStoreProvider>
         </DbProvider>
       </QueryClientProvider>
     </CompatibilityProvider>

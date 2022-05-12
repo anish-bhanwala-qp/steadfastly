@@ -1,16 +1,17 @@
 import React from 'react'
+import {useStore} from 'zustand'
 import styles from './App.module.css'
 import {AppRoutes} from './AppRoutes'
 import {Header} from './components/header/Header'
 import {FullPageSpinner} from './components/spinner/FullPageSpinner'
 import {LoadingState} from './models/LoadingState'
+import {useAppStore} from './providers/AppStoreProvider'
 import {useDb} from './providers/DbProvider'
-import {useAppStore} from './store/appStore'
 
 const App: React.FC = () => {
-  const loadingNotes = useAppStore(state => state.loadingState)
+  const loadingNotes = useStore(useAppStore(), state => state.loadingState)
   const db = useDb()
-  const loadNotes = useAppStore(state => state.loadNotes)
+  const loadNotes = useStore(useAppStore(), state => state.loadNotes)
 
   React.useEffect(() => {
     loadNotes(db)

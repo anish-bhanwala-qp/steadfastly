@@ -1,6 +1,7 @@
 import React from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {BrowserRouter as Router} from 'react-router-dom'
+import {AppStoreProvider} from 'src/providers/AppStoreProvider'
 import {DbProvider} from 'src/providers/DbProvider'
 
 interface Props {
@@ -23,7 +24,9 @@ export const TestAppProviders: React.FC<Props> = ({databaseName, children}) => {
         databaseVersion={1}
         testEnv={true}
       >
-        <Router>{children}</Router>
+        <AppStoreProvider>
+          <Router>{children}</Router>
+        </AppStoreProvider>
       </DbProvider>
     </QueryClientProvider>
   )
