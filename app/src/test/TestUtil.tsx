@@ -56,14 +56,19 @@ const waitForLoadingToFinish = async (): Promise<void> => {
   )
 }
 
-const waitForSavingToFinish = (): Promise<void> =>
-  waitForElementToBeRemoved(
+const waitForSavingToFinish = async (): Promise<void> => {
+  await waitFor(() => screen.getByText(/saving/i))
+
+  if (!screen.queryByText(/saving/i)) return
+
+  await waitForElementToBeRemoved(
     () => [
       ...screen.queryAllByLabelText(/saving/i),
       ...screen.queryAllByText(/saving/i),
     ],
     {timeout: 4000},
   )
+}
 
 export * from '@testing-library/react'
 export {

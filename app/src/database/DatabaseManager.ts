@@ -150,7 +150,6 @@ export class DatabaseManager {
       }
       request.onsuccess = function (): void {
         resolve()
-        console.log('updateById success')
       }
     })
   }
