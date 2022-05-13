@@ -37,6 +37,6 @@ export class NoteDataStore {
     id: string,
     note: NoteModel,
   ): Promise<void> {
-    return db.updateById<NoteModel>(this.getTableName(), id, note)
+    return db.update<NoteModel>(this.getTableName(), note)
   }
 }

@@ -16,6 +16,7 @@ export const Header: React.FC = () => {
         <Link to="/" className={styles.name}>
           Steadfastly
         </Link>
+        <Link to="add-backups">Add Backup</Link>
       </header>
       <Nav show={showNav} />
     </>

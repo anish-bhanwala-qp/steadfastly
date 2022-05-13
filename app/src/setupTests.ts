@@ -6,6 +6,8 @@ import '@testing-library/jest-dom'
 import {act} from '@testing-library/react'
 import 'fake-indexeddb/auto'
 
+const unmockedFetch = global.fetch
+
 // general cleanup
 beforeEach(async () => {
   // queryCache.clear();
@@ -30,6 +32,8 @@ afterEach(async () => {
     })
     jest.useRealTimers()
   }
+
+  global.fetch = unmockedFetch
 
   /* setLogger({
     log: console.log,

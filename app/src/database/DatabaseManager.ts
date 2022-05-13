@@ -1,5 +1,6 @@
-import {TableName} from '../types/TablesName'
-import {NoteDataStore} from './NoteDataStore'
+import {TableName} from 'src/types/TablesName'
+import {NoteDataStore} from 'src/database/NoteDataStore'
+import {BackupDataStore} from './BackupDataStore'
 
 export class DatabaseManager {
   private db?: IDBDatabase
@@ -42,6 +43,7 @@ export class DatabaseManager {
           https://stackoverflow.com/questions/33709976/uncaught-invalidstateerror-failed-to-execute-transaction-on-idbdatabase-a 
         */
         NoteDataStore.create(this)
+        BackupDataStore.create(this)
 
         const tx = request.transaction!
 
@@ -139,7 +141,7 @@ export class DatabaseManager {
     })
   }
 
-  updateById<T>(tableName: TableName, id: string, data: T): Promise<void> {
+  update<T>(tableName: TableName, data: T): Promise<void> {
     const transaction = this.instance().transaction(tableName, 'readwrite')
     const objectStore = transaction.objectStore(tableName)
     return new Promise<void>((resolve, reject) => {
