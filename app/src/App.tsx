@@ -11,7 +11,7 @@ import {useDb} from './providers/DbProvider'
 const App: React.FC = () => {
   const loadingNotes = useStore(useAppStore(), state => state.loadingState)
   const db = useDb()
-  const loadNotes = useStore(useAppStore(), state => state.loadNotes)
+  const loadNotes = useStore(useAppStore(), state => state.initAppStore)
 
   React.useEffect(() => {
     loadNotes(db)

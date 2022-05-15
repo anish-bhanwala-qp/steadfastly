@@ -19,10 +19,11 @@ export interface ApiState<T> {
 
 export interface AppStore {
   notes: NoteModel[]
+  backup?: BackupModel
   loadingState: LoadingState
   error?: unknown
   backupManager?: BackupManager
-  loadNotes(db: DatabaseManager): Promise<void>
+  initAppStore(db: DatabaseManager): Promise<void>
   updateNote(updatedNote: NoteModel, db: DatabaseManager): Promise<void>
   addNote(db: DatabaseManager): Promise<NoteModel>
   setupGoogleBackup(
@@ -36,11 +37,13 @@ export const createAppStore = (): UseBoundStore<StoreApi<AppStore>> => {
     immer((set, get) => ({
       notes: [],
       loadingState: LoadingState.PENDING,
-      async loadNotes(db: DatabaseManager): Promise<void> {
+      async initAppStore(db: DatabaseManager): Promise<void> {
         try {
           const notes = await NoteDataStore.findAll(db)
+          const backup = await BackupDataStore.findByType(db, BackupType.Google)
           set(state => {
             state.notes = notes
+            state.backup = backup
             state.loadingState = LoadingState.DONE
           })
         } catch (error) {
@@ -83,6 +86,7 @@ export const createAppStore = (): UseBoundStore<StoreApi<AppStore>> => {
         const backup = await updateOrInsertBackupCredentials(db, credentials)
 
         set(state => {
+          state.backup = backup
           state.backupManager = new GoogleDriveBackupManager(backup)
         })
       },

@@ -1,9 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {useAppStore} from 'src/providers/AppStoreProvider'
+import {useStore} from 'zustand'
 import {Nav} from '../nav/Nav'
 import styles from './Header.module.css'
 
 export const Header: React.FC = () => {
+  const backup = useStore(useAppStore(), state => state.backup)
   const [showNav, setShowNav] = React.useState<boolean>(false)
   const handleToggleNav = (): void => {
     setShowNav(!showNav)
@@ -12,11 +15,15 @@ export const Header: React.FC = () => {
   return (
     <>
       <header className={styles.header}>
-        <button onClick={handleToggleNav}>Nav</button>
-        <Link to="/" className={styles.name}>
-          Steadfastly
-        </Link>
-        <Link to="add-backups">Add Backup</Link>
+        <div className={styles.left}>
+          <button onClick={handleToggleNav}>Nav</button>
+          <Link to="/" className={styles.name}>
+            Steadfastly
+          </Link>
+        </div>
+        <div className={styles.right}>
+          {!backup && <Link to="add-backups">Add Backup</Link>}
+        </div>
       </header>
       <Nav show={showNav} />
     </>
