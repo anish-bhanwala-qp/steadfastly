@@ -6,6 +6,6 @@ export interface BackupModel {
   // type is used a primary key
   type: BackupType
   credentials: GoogleDriveBackupCredentials
-  lastSyncedTs: Date
+  lastSyncedAt: Date
   notesToSync: NoteModel[]
 }

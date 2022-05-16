@@ -1,15 +1,22 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {useAppStore} from 'src/providers/AppStoreProvider'
+import {useDb} from 'src/providers/DbProvider'
 import {useStore} from 'zustand'
 import {Nav} from '../nav/Nav'
 import styles from './Header.module.css'
 
 export const Header: React.FC = () => {
   const backup = useStore(useAppStore(), state => state.backup)
+  const backupManager = useStore(useAppStore(), state => state.backupManager)
+  const db = useDb()
   const [showNav, setShowNav] = React.useState<boolean>(false)
   const handleToggleNav = (): void => {
     setShowNav(!showNav)
+  }
+
+  const handleStartBackup = (): void => {
+    backupManager?.startBackup(db)
   }
 
   return (
@@ -23,6 +30,7 @@ export const Header: React.FC = () => {
         </div>
         <div className={styles.right}>
           {!backup && <Link to="add-backups">Add Backup</Link>}
+          {backup && <button onClick={handleStartBackup}>Start backup</button>}
         </div>
       </header>
       <Nav show={showNav} />

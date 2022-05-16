@@ -1,6 +1,7 @@
 import {TableName} from 'src/types/TablesName'
 import {NoteDataStore} from 'src/database/NoteDataStore'
 import {BackupDataStore} from './BackupDataStore'
+import {BackupLogDataStore} from './BackupLogDataStore'
 
 export class DatabaseManager {
   private db?: IDBDatabase
@@ -44,6 +45,7 @@ export class DatabaseManager {
         */
         NoteDataStore.create(this)
         BackupDataStore.create(this)
+        BackupLogDataStore.create(this)
 
         const tx = request.transaction!
 

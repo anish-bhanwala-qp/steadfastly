@@ -8,7 +8,7 @@ import {v4 as uuid} from 'uuid'
 import {GoogleDriveBackupCredentials} from 'src/models/GoogleDriveBackupCredentials'
 import {BackupDataStore} from 'src/database/BackupDataStore'
 import {BackupModel} from 'src/models/BackupModel'
-import {BackupManager} from 'src/backups/Backup'
+import {BackupManager} from 'src/backups/BackupManager'
 import {GoogleDriveBackupManager} from 'src/backups/googleDrive/GoogleDriveBackupManager'
 import {BackupType} from 'src/models/BackupType'
 
@@ -40,10 +40,12 @@ export const createAppStore = (): UseBoundStore<StoreApi<AppStore>> => {
       async initAppStore(db: DatabaseManager): Promise<void> {
         try {
           const notes = await NoteDataStore.findAll(db)
-          const backup = await BackupDataStore.findByType(db, BackupType.Google)
+          const backup = await BackupDataStore.findByType(db, BackupType.GOOGLE)
+          const backupManager = backup && new GoogleDriveBackupManager(backup)
           set(state => {
             state.notes = notes
             state.backup = backup
+            state.backupManager = backupManager
             state.loadingState = LoadingState.DONE
           })
         } catch (error) {
@@ -98,7 +100,7 @@ const updateOrInsertBackupCredentials = async (
   db: DatabaseManager,
   credentials: GoogleDriveBackupCredentials,
 ): Promise<BackupModel> => {
-  const existingBackup = await BackupDataStore.findByType(db, BackupType.Google)
+  const existingBackup = await BackupDataStore.findByType(db, BackupType.GOOGLE)
   if (existingBackup) {
     const updatedBackup: BackupModel = {
       ...existingBackup,
@@ -108,11 +110,11 @@ const updateOrInsertBackupCredentials = async (
     return updatedBackup
   } else {
     const backup: BackupModel = {
-      type: BackupType.Google,
+      type: BackupType.GOOGLE,
       credentials,
       notesToSync: [],
       // Set to the beginning of time so that all data is synced for the new backup
-      lastSyncedTs: new Date(0),
+      lastSyncedAt: new Date(0),
     }
     await BackupDataStore.insert(db, backup)
     return backup

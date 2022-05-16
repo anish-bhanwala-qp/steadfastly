@@ -1,3 +1,3 @@
 export enum BackupType {
-  Google = 'Google',
+  GOOGLE = 'Google',
 }

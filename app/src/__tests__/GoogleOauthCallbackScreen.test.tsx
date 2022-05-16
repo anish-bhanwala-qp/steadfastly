@@ -15,7 +15,7 @@ describe('GoogleOauthCallback screen', () => {
     const [databaseName, databaseManager] = await connectToTestDb()
     const existingBackup = await BackupDataStore.findByType(
       databaseManager,
-      BackupType.Google,
+      BackupType.GOOGLE,
     )
     // check backup is not setup already
     expect(existingBackup).toBeUndefined()
@@ -33,7 +33,7 @@ describe('GoogleOauthCallback screen', () => {
 
     const newBackup = await BackupDataStore.findByType(
       databaseManager,
-      BackupType.Google,
+      BackupType.GOOGLE,
     )
     // check backup is not setup already
     expect(newBackup).toBeDefined()

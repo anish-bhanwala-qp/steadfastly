@@ -22,7 +22,7 @@ describe('Google Oauth setup flow', () => {
     const [databaseName, databaseManager] = await connectToTestDb()
     const existingBackup = await BackupDataStore.findByType(
       databaseManager,
-      BackupType.Google,
+      BackupType.GOOGLE,
     )
     // check backup is not setup already
     expect(existingBackup).toBeUndefined()
@@ -70,7 +70,7 @@ describe('Google Oauth setup flow', () => {
     // check if backup is setup
     const newBackup = await BackupDataStore.findByType(
       databaseManager,
-      BackupType.Google,
+      BackupType.GOOGLE,
     )
     expect(newBackup).toBeDefined()
 
