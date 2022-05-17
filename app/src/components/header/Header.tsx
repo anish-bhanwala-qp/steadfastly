@@ -8,6 +8,7 @@ import styles from './Header.module.css'
 
 export const Header: React.FC = () => {
   const backup = useStore(useAppStore(), state => state.backup)
+  const appStore = useStore(useAppStore(), state => state)
   const backupManager = useStore(useAppStore(), state => state.backupManager)
   const db = useDb()
   const [showNav, setShowNav] = React.useState<boolean>(false)
@@ -16,7 +17,7 @@ export const Header: React.FC = () => {
   }
 
   const handleStartBackup = (): void => {
-    backupManager?.startBackup(db)
+    backupManager?.startBackup(db, appStore)
   }
 
   return (

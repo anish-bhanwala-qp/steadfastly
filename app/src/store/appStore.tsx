@@ -85,7 +85,7 @@ export const createAppStore = (): UseBoundStore<StoreApi<AppStore>> => {
         db: DatabaseManager,
         credentials: GoogleDriveBackupCredentials,
       ): Promise<void> {
-        const backup = await updateOrInsertBackupCredentials(db, credentials)
+        const backup = await GoogleDriveBackupManager.setup(db, credentials)
 
         set(state => {
           state.backup = backup
@@ -94,31 +94,6 @@ export const createAppStore = (): UseBoundStore<StoreApi<AppStore>> => {
       },
     })),
   )
-}
-
-const updateOrInsertBackupCredentials = async (
-  db: DatabaseManager,
-  credentials: GoogleDriveBackupCredentials,
-): Promise<BackupModel> => {
-  const existingBackup = await BackupDataStore.findByType(db, BackupType.GOOGLE)
-  if (existingBackup) {
-    const updatedBackup: BackupModel = {
-      ...existingBackup,
-      credentials,
-    }
-    await BackupDataStore.update(db, updatedBackup)
-    return updatedBackup
-  } else {
-    const backup: BackupModel = {
-      type: BackupType.GOOGLE,
-      credentials,
-      notesToSync: [],
-      // Set to the beginning of time so that all data is synced for the new backup
-      lastSyncedAt: new Date(0),
-    }
-    await BackupDataStore.insert(db, backup)
-    return backup
-  }
 }
 
 const createEmptyNote = (): NoteModel => ({
