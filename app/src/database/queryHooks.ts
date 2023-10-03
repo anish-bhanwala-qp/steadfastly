@@ -1,29 +1,36 @@
-import {useQuery, UseQueryResult} from 'react-query'
-import {queryClient} from 'src/providers/AppProviders'
 import {useDb} from 'src/providers/DbProvider'
 import {PageBlock} from 'src/types/blocks/PageBlock'
 import {BlockType} from 'src/types/BlockType'
 import {BlockDataStore} from './BlockDataStore'
+import {UseAsyncState, useAsyncCallback} from 'src/hooks/useAsyncHook'
+import React from 'react'
 
-export const usePagesQuery = (): UseQueryResult<PageBlock[]> => {
+export const usePagesQuery = (): UseAsyncState<PageBlock[]> => {
   const db = useDb()
 
-  return useQuery(['pages'], () =>
-    BlockDataStore.getAllByType(db, BlockType.Page),
+  const [state, callback] = useAsyncCallback(() =>
+    BlockDataStore.getAllByType<PageBlock>(db, BlockType.Page),
   )
-}
 
-export const invalidatePagesQuery = (): void => {
-  queryClient.invalidateQueries(['pages'])
+  React.useEffect(() => {
+    callback()
+  }, [])
+
+  return state
 }
 
 export const usePageQuery = (
   id: string,
-): UseQueryResult<PageBlock | undefined> => {
+): UseAsyncState<PageBlock | undefined> => {
   const db = useDb()
 
-  return useQuery(['page', id], () => BlockDataStore.getById(db, id))
-}
+  const [state, callback] = useAsyncCallback(() =>
+    BlockDataStore.getById<PageBlock>(db, id),
+  )
 
-export const invalidatePageQuery = (id: string): Promise<void> =>
-  queryClient.invalidateQueries(['page', id])
+  React.useEffect(() => {
+    callback()
+  }, [id])
+
+  return state
+}

@@ -6,10 +6,10 @@ import {usePagesQuery} from 'src/database/queryHooks'
 import {WelcomeScreen} from './WelcomeScreen'
 
 export const HomeScreen: React.FC = () => {
-  const {data, error, isLoading} = usePagesQuery()
+  const {data, error, isLoading, isPending} = usePagesQuery()
 
   if (error) throw error
-  if (isLoading) return <FullPageSpinner />
+  if (isPending || isLoading) return <FullPageSpinner />
 
   const pages = data!
 

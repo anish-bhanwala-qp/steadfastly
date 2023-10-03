@@ -1,7 +1,7 @@
 import React from 'react'
 import {DatabaseManager} from 'src/database/DatabaseManager'
 
-interface Props {
+interface Props extends React.PropsWithChildren {
   databaseName: string
   databaseVersion: number
   testEnv?: boolean

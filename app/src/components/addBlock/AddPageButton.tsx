@@ -4,16 +4,16 @@ import {useAddPageMutation} from 'src/database/mutationHooks'
 
 export const AddPageButton: React.FC = () => {
   const navigate = useNavigate()
-  const addPageMutation = useAddPageMutation()
+  const [state, addPage] = useAddPageMutation()
 
-  if (addPageMutation.error) throw addPageMutation.error
+  if (state.error) throw state.error
 
   const handleAddPage = async (): Promise<void> => {
-    const page = await addPageMutation.mutateAsync()
-    navigate(`/pages/${page.id}`)
+    const page = addPage()
+    // navigate(`/pages/${page.id}`)
   }
 
-  const loading = addPageMutation.isLoading
+  const loading = state.isLoading
 
   return (
     <button disabled={loading} onClick={handleAddPage}>

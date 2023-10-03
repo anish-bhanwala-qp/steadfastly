@@ -9,27 +9,35 @@ interface Props {
 
 export const AddChildBlockButton: React.FC<Props> = ({blockType}) => {
   const {page} = usePageContext()
-  const addBlockToPageMutation = useAddBlockToPageMutation()
+  const [state, mutate] = useAddBlockToPageMutation()
 
   const handleAddTextBlock = (): void => {
-    addBlockToPageMutation.mutate({page, blockType: BlockType.Text})
+    mutate({page, blockType: BlockType.Text})
   }
 
   const handleAddPageBlock = (): void => {
-    addBlockToPageMutation.mutate({page, blockType: BlockType.Page})
+    mutate({page, blockType: BlockType.Page})
   }
 
   const renderButton = (): JSX.Element => {
     switch (blockType) {
       case BlockType.Text:
         return (
-          <button type="button" onClick={handleAddTextBlock}>
+          <button
+            disabled={state.isLoading}
+            type="button"
+            onClick={handleAddTextBlock}
+          >
             Add text
           </button>
         )
       case BlockType.Page:
         return (
-          <button type="button" onClick={handleAddPageBlock}>
+          <button
+            disabled={state.isLoading}
+            type="button"
+            onClick={handleAddPageBlock}
+          >
             Add page
           </button>
         )

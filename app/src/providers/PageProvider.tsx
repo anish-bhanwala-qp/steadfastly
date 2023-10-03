@@ -15,7 +15,7 @@ const PageContext = React.createContext<PageContextValue>({
   onUpdateTitle: () => {},
 })
 
-export const PageProvider: React.FC = ({children}) => {
+export const PageProvider: React.FC<React.PropsWithChildren> = ({children}) => {
   const params = useParams()
   const db = useDb()
   const {error, data, isLoading} = usePageQuery(params.id!)

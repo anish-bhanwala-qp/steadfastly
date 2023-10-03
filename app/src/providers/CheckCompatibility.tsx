@@ -1,6 +1,8 @@
 import React from 'react'
 
-export const CompatibilityProvider: React.FC = ({children}) => {
+export const CompatibilityProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   if (!('serviceWorker' in navigator)) {
     return <h1>Your browser doesn't support ServiceWorkers.</h1>
   }
